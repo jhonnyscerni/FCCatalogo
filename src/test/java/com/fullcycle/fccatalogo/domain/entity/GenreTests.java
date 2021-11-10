@@ -19,7 +19,7 @@ class GenreTests {
         Genre entity = new Genre(TestUtils.DEFAULT_GENRE_NAME_1);
 
         Assertions.assertNotNull(entity);
-        Assertions.assertEquals("Genre 1", entity.getName());
+        Assertions.assertEquals(TestUtils.DEFAULT_GENRE_NAME_1, entity.getName());
         Assertions.assertTrue(entity.isValidUUID(entity.getId().toString()));
     }
 

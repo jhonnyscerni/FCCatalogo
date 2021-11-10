@@ -1,36 +1,7 @@
 package com.fullcycle.fccatalogo.domain.entity;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.fullcycle.fccatalogo.domain.entity.enums.CastMemberType;
 import java.util.UUID;
-
-enum CastMemberType {
-    TYPE1(1),
-    TYPE2(2);
-
-    private final Integer type;
-    private final static Map<Integer, CastMemberType> values = new HashMap<>();
-
-    CastMemberType(Integer type) {
-        this.type = type;
-    }
-
-    static {
-        for (CastMemberType type : CastMemberType.values()){
-            values.put(type.type, type);
-        }
-    }
-
-    public Integer getType(){
-        return this.type;
-    }
-
-    public static Boolean valueOf(CastMemberType type){
-        CastMemberType castMemberType = values.get(type.type);
-        return castMemberType != null;
-    }
-
-}
 
 public class CastMember extends BaseEntity {
     private String name;
@@ -45,11 +16,28 @@ public class CastMember extends BaseEntity {
         this.setType(type);
     }
 
+    public CastMember(String name, CastMemberType type) {
+        super.generateUUID();
+        this.setName(name);
+        this.setType(type);
+    }
+
+    public CastMember(String name) {
+        super.generateUUID();
+        this.setName(name);
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
+        if (name == null) {
+            throw new IllegalArgumentException("name is marked non-null but is null");
+        }
+        if (name.length() == 0) {
+            throw new IllegalArgumentException("name is marked non-blank but is null");
+        }
         this.name = name;
     }
 
@@ -59,7 +47,7 @@ public class CastMember extends BaseEntity {
 
     public void setType(CastMemberType type) {
         if (type == null) throw new IllegalArgumentException("type is marked non-null but is null");
-        if (!CastMemberType.valueOf(type)) throw new IllegalArgumentException("");
+        if (Boolean.FALSE.equals(CastMemberType.valueOf(type))) throw new IllegalArgumentException("type is marked as valid ");
         this.type = type;
     }
 }
